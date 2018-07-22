@@ -56,7 +56,8 @@ public class AboutDefaultMethods {
 		LongAdder adder = new LongAdder();
 
 		numbers.forEach(number -> {
-		}); // FIXME: add the number to the adder
+			adder.add(number);
+		});
 
 		assertThat(adder.sum()).isEqualTo(5);
 	}
@@ -128,10 +129,7 @@ public class AboutDefaultMethods {
 				new Tasktopian("Mary", "Senior Engineer"), //
 				new Tasktopian("Bob", "Designer"));
 
-		// FIXME: take a look the the comparing static method on Comparator. Pass in the method reference for getName.
-		// This creates one comparator. Append another one by using the default method thenComparing and use the getRole
-		// method for comparing.
-		Collections.sort(list, null);
+		Collections.sort(list, Comparator.comparing(Tasktopian::getName).thenComparing(Tasktopian::getRole));
 
 		assertThat(list).isEqualTo(Lists.newArrayList(new Tasktopian("Bob", "Designer"), //
 				new Tasktopian("Bob", "Engineer"), //
@@ -170,8 +168,7 @@ public class AboutDefaultMethods {
 	public void java8_removeListElement() {
 		List<String> list = Lists.newArrayList("a", "b", "c", "d", "e");
 
-		// FIXME: take a look at the removeIf method and pass in a predicate the is only true if the element is "d"
-		list.removeIf(null);
+		list.removeIf("d"::equals);
 
 		assertThat(list).isEqualTo(Lists.newArrayList("a", "b", "c", "e"));
 	}
@@ -210,8 +207,7 @@ public class AboutDefaultMethods {
 
 		@Override
 		public String print() {
-			// FIXME:  Concatenate both super.print() calls here. Start with Printable_A.super.print()
-			return null;
+			return Printable_A.super.print() + Printable_B.super.print();
 		}
 
 	}

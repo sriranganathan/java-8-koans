@@ -93,7 +93,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		String result = yeller.yell("echo", (echo) -> {
-			return null; // FIXME: Return the echo value
+			return echo;
 		});
 
 		assertThat(result).isEqualTo("echo");
@@ -104,7 +104,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		String result = yeller.yell("echo", echo -> {
-			return null; // FIXME: Return the echo value
+			return echo;
 		});
 
 		assertThat(result).isEqualTo("echo");
@@ -116,7 +116,7 @@ public class AboutLambdas {
 		final String echoSufix = ".echo";
 
 		String result = yeller.yell("echo", echo -> {
-			String myEcho = null; // FIXME: Modify the echo and concatenate the echoSufix
+			String myEcho = echo + echoSufix;
 			return myEcho;
 		});
 
@@ -127,8 +127,7 @@ public class AboutLambdas {
 	public void java8_passingFunctionsWithLambdas() {
 		Yeller yeller = new Yeller();
 
-		// FIXME: Pass in a lambda like above but without any parentheses, brackets, return statement and semi colons
-		String result = yeller.yell("echo", (Function<String, String>) null);
+		String result = yeller.yell("echo", echo -> echo);
 
 		assertThat(result).isEqualTo("echo");
 	}
@@ -136,11 +135,6 @@ public class AboutLambdas {
 	@Test
 	public void java8_passingFunctionsWithLambdas_WithMethodReference() {
 		Yeller yeller = new Yeller();
-
-		// FIXME: Method references are just another way to express a lambda. What we want here is is to call the 
-		// toString() method. So, try to pass in String::toString
-		// This is just a method reference an the jdk knows how to compile that toString will be called on the passed 
-		// in parameters.
 		String result = yeller.yell("echo", String::toString);
 
 		assertThat(result).isEqualTo("echo");
@@ -165,7 +159,7 @@ public class AboutLambdas {
 	public void java8_passingSuppliers() {
 		Yeller yeller = new Yeller();
 
-		String result = yeller.yell(() -> null); // FIXME: Let the supplier return the echo
+		String result = yeller.yell(() -> "echo"); // FIXME: Let the supplier return the echo
 
 		assertThat(result).isEqualTo("echo");
 	}
@@ -190,7 +184,8 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		yeller.yell("echo", echo -> {
-		}); // FIXME: consume the provided value and pass it to yeller.setEcho
+			yeller.setEcho(echo);
+		});
 
 		assertThat(yeller.getEcho()).isEqualTo("echo");
 	}
@@ -216,7 +211,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 		yeller.setEcho("echo");
 
-		boolean hasEcho = yeller.hasEcho(echo -> "echo".equals(null)); // FIXME: Fix the predicate to do a real equal check
+		boolean hasEcho = yeller.hasEcho(echo -> "echo".equals(echo));
 
 		assertThat(hasEcho).isTrue();
 	}
@@ -250,7 +245,7 @@ public class AboutLambdas {
 	public void java8_passingOwnFunctionalInterfaces() {
 		Yeller yeller = new Yeller();
 
-		String echo = yeller.yell("hello", "echo", (echo1, echo2) -> null); // FIXME: let your concatenator concatenate :)
+		String echo = yeller.yell("hello", "echo", (echo1, echo2) -> echo1 + " " + echo2);
 
 		assertThat(echo).isEqualTo("hello echo");
 	}

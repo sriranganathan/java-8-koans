@@ -57,13 +57,12 @@ public class AboutOptionals {
 
 		boolean bobHasInteresets = bob.getInterests().isPresent();
 
-		assertThat(bobHasInteresets).isFalse(); // FIXME: no optional present. So false can't be true ;)
+		assertThat(bobHasInteresets).isTrue();
 	}
 
 	@Test
 	public void optionalsAreOptional() {
-		Optional<String> optional = Optional.of(null); // FIXME: find out how to create an optional of null
-
+		Optional<String> optional = Optional.empty();
 		String value = optional.orElse("b");
 
 		assertThat(value).isEqualTo("b");
